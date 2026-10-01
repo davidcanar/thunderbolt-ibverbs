@@ -201,7 +201,7 @@ verify_provider() {
 	# device for libibverbs to match against.
 	printf '==> ldd -r symbol resolution\n'
 	local relocations
-	if ! relocations="$(ldd -r "$so" 2>&1)" ||
+	if ! relocations="$(env -u LD_LIBRARY_PATH -u LD_PRELOAD ldd -r "$so" 2>&1)" ||
 		grep -Eq 'not found|undefined symbol' <<< "$relocations"; then
 		printf '%s\nerror: unresolved dependencies in provider .so\n' "$relocations" >&2
 		exit 1

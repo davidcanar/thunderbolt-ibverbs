@@ -170,7 +170,7 @@ build_provider() {
 	# Check the distro library, not the just-built libibverbs in build/lib.
 	# Fail before packaging if a distro patch or explicit tag changed the ABI.
 	local relocations
-	if ! relocations="$(ldd -r "$so" 2>&1)" ||
+	if ! relocations="$(env -u LD_LIBRARY_PATH -u LD_PRELOAD ldd -r "$so" 2>&1)" ||
 		grep -Eq 'not found|undefined symbol' <<< "$relocations"; then
 		printf '%s\nerror: provider does not match installed libibverbs\n' "$relocations" >&2
 		exit 1
