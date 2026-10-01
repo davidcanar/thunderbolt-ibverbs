@@ -4,6 +4,9 @@ registries:
     # Declare this anonymous Git host for Dependabot's egress allowlist.
     type: git
     url: https://git.kernel.org
+    # GitHub's hosted validator still requires these fields for public Git.
+    username: ""
+    password: ""
 updates:
   - package-ecosystem: "nix"
     directory: "/"
